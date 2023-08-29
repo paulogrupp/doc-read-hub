@@ -1,0 +1,18 @@
+services:
+  db:
+    container_name: doc-read-hub_db
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    container_name: doc-read-hub_web
+    command: bash -c "while [ true ]; do sleep 10; done"
+    volumes:
+      - .:/doc-read-hub
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    depends_on:
+      - db
