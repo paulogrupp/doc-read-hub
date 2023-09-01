@@ -1,0 +1,15 @@
+<div>
+  <p class="my-5">
+    <strong class="block font-medium mb-1"><%= @book.title %></strong>
+  </p>
+  <div data-controller="pdf-reader" data-pdf-reader-url-value="<%= url_for(@book.pdf) %>">
+    <div class="grid">
+      <canvas data-pdf-reader-target="canvas"></canvas>
+    </div>
+    <div class="grid">
+      <button data-action="click->pdf-reader#prevPage">Previous page</button>
+      <input type="number" min="1" data-pdf-reader-target="pageNumber" data-action="change->pdf-reader#changePage"/>
+      <button data-action="click->pdf-reader#nextPage">Next page</button>
+    </div>
+  </div>
+</div>
