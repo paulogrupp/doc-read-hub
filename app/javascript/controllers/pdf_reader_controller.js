@@ -8,6 +8,7 @@ export default class extends Controller {
 
   currentPage = 1
   pdf = null
+  scale = 1.75
 
   connect() {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.worker.min.js'
@@ -23,7 +24,7 @@ export default class extends Controller {
 
   async renderPage() {
     const page = await this.pdf.getPage(this.currentPage)
-    const viewport = page.getViewport({ scale: 1.75 })
+    const viewport = page.getViewport({ scale: this.scale });
     const canvas = this.canvasTarget
     canvas.width = viewport.width
     canvas.height = viewport.height
@@ -34,6 +35,18 @@ export default class extends Controller {
       viewport: viewport
     }
     await page.render(renderContext)
+  }
+
+  zoomIn() {
+    this.scale += 0.25;
+    this.renderPage();
+  }
+
+  zoomOut() {
+    if (this.scale > 0.25) {
+      this.scale -= 0.25;
+      this.renderPage();
+    }
   }
 
   prevPage() {
