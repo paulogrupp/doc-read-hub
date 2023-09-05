@@ -6,7 +6,8 @@ export default class extends Controller {
   static targets = ["canvas", "pageNumber"]
   static values = { url: String }
 
-  currentPage = 1
+  currentPage = Number(this.data.get("currentPage"));
+  bookId = this.data.get("bookId");
   pdf = null
   scale = 1.75
 
@@ -49,27 +50,51 @@ export default class extends Controller {
     }
   }
 
-  prevPage() {
+  async prevPage() {
     if (this.currentPage > 1) {
-      this.currentPage -= 1
-      this.renderPage()
-      this.pageNumberTarget.value = this.currentPage
+      this.currentPage -= 1;
+      this.renderPage();
+      this.pageNumberTarget.value = this.currentPage;
+  
+      await this.updateCurrentPageAttribute();
     }
   }
-
-  nextPage() {
+  
+  async nextPage() {
     if (this.currentPage < this.pdf.numPages) {
-      this.currentPage += 1
-      this.renderPage()
-      this.pageNumberTarget.value = this.currentPage
+      this.currentPage += 1;
+      this.renderPage();
+      this.pageNumberTarget.value = this.currentPage;
+  
+      await this.updateCurrentPageAttribute();
+    }
+  }
+  
+  async updateCurrentPageAttribute() {
+    try {
+      const response = await fetch(`/books/${this.bookId}/update_current_page`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: JSON.stringify({ current_page: this.currentPage }),
+      });
+  
+      if (!response.ok) {
+        console.error('Failed to update current_page attribute');
+      }
+    } catch (error) {
+      console.error('An error occurred while updating current_page attribute:', error);
     }
   }
 
-  changePage() {
+  async changePage() {
     let requestedPage = Number(this.pageNumberTarget.value)
     if (requestedPage > 0 && requestedPage <= this.pdf.numPages) {
       this.currentPage = requestedPage
       this.renderPage()
+      await this.updateCurrentPageAttribute();
     } else {
       alert(`Invalid page number (Max: ${this.pdf.numPages})`)
       this.pageNumberTarget.value = this.currentPage

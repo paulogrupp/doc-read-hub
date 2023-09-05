@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :books do
     member do
       get 'read'
+      patch 'update_current_page'
     end
   end
 

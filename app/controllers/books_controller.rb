@@ -48,6 +48,18 @@ class BooksController < ApplicationController
     end
   end
 
+  # PATCH /books/1/update_current_page
+  def update_current_page
+    @book = Book.find(params[:id])
+    new_current_page = params[:current_page].to_i
+
+    if @book.update(current_page: new_current_page)
+      head :no_content
+    else
+      render json: { errors: @book.errors }, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /books/1 or /books/1.json
   def destroy
     @book.destroy

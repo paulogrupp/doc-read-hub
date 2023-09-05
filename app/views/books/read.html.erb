@@ -1,4 +1,4 @@
-<div data-controller="pdf-reader" data-pdf-reader-url-value="<%= url_for(@book.pdf) %>">
+<div data-controller="pdf-reader" data-pdf-reader-url-value="<%= url_for(@book.pdf) %>" data-pdf-reader-book-id="<%= @book.id %>" data-pdf-reader-current-page="<%= @book.current_page %>">
   <div class="bg-white grid sticky top-0">
     <div class="justify-self-center">
       <button data-action="click->pdf-reader#prevPage">Previous page</button>
@@ -11,6 +11,7 @@
     </div>
   </div>
   <p class="my-5">
+    <%= link_to "Back to books", books_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <strong class="block font-medium mb-1"><%= @book.title %></strong>
   </p>
   <div class="grid pb-20">
