@@ -1,5 +1,5 @@
-<div data-controller="pdf-reader"data-pdf-reader-url-value="<%= url_for(@book.pdf) %>">
-  <div class="grid sticky top-0">
+<div data-controller="pdf-reader" data-pdf-reader-url-value="<%= url_for(@book.pdf) %>">
+  <div class="bg-white grid sticky top-0">
     <div class="justify-self-center">
       <button data-action="click->pdf-reader#prevPage">Previous page</button>
       <input type="number" min="1" data-pdf-reader-target="pageNumber" data-action="change->pdf-reader#changePage" class="shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2"/>
@@ -13,7 +13,7 @@
   <p class="my-5">
     <strong class="block font-medium mb-1"><%= @book.title %></strong>
   </p>
-  <div class="grid">
+  <div class="grid pb-20">
     <div class="justify-self-center">
       <canvas data-pdf-reader-target="canvas"></canvas>
     </div>
