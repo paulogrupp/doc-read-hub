@@ -8,7 +8,8 @@ services:
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
   web:
-    build: .
+    build:
+      dockerfile: Dockerfile.dev
     container_name: doc-read-hub_web
     command: bash -c "while [ true ]; do sleep 10; done"
     volumes:
