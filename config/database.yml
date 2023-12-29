@@ -8,12 +8,12 @@ default: &default
 
 development:
   <<: *default
-  database: blueprint_rails_development
+  database: doc-read-hub_rails_development
 
 test:
   <<: *default
-  database: blueprint_rails_test
+  database: doc-read-hub_rails_test
 
 production:
   <<: *default
-  database: blueprint_rails_production
+  database: doc-read-hub_rails_production
