@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  layout 'read', only: [:read]
+
   before_action :set_book, only: %i[show edit update destroy read]
 
   # GET /books or /books.json

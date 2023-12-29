@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     container_name: doc-read-hub_db
@@ -7,10 +9,12 @@ services:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+
   web:
-    build:
-      dockerfile: Dockerfile.dev
     container_name: doc-read-hub_web
+    build:
+      context: .
+      dockerfile: Dockerfile.dev  # Use Dockerfile.dev for building the image
     command: bash -c "while [ true ]; do sleep 10; done"
     volumes:
       - .:/doc-read-hub

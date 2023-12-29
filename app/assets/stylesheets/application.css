@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+/* Dark mode styles when "dark" class is present on body */
+body.dark {
+  background-color: #121212; /* Dark background color */
+  color: #ffffff; /* Dark text color */
+}
+
+body.dark input {
+  color: #000000
+}
